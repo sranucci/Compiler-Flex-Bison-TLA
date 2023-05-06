@@ -19,20 +19,80 @@
  * largo de aquello que se va a almacenar.
  */
 
-// Bloque de comentarios multilínea.
-void BeginCommentPatternAction();
-void EndCommentPatternAction();
-
 // Patrones terminales del lenguaje diseñado.
-token AdditionOperatorPatternAction(const char * lexeme);
-token CloseParenthesisPatternAction(const char * lexeme);
-token DivisionOperatorPatternAction(const char * lexeme);
-token IntegerPatternAction(const char * lexeme, const int length);
-token MultiplicationOperatorPatternAction(const char * lexeme);
-token OpenParenthesisPatternAction(const char * lexeme);
-token SubtractionOperatorPatternAction(const char * lexeme);
 
-// Patrón desconocido, permite abortar debido a un error de sintaxis.
+token LabelPatternAction(const char * lexeme);
+
+
+
+token CreatePatternAction(const char * lexeme);
+
+token ChartPatternAction(const char * lexeme);
+
+token WherePatternAction(const char * lexeme);
+
+
+
+token ScatterPatternAction(const char * lexeme);
+
+token BarPatternAction(const char * lexeme);
+
+token PiePatternAction(const char * lexeme);
+
+token LinePatternAction(const char * lexeme);
+
+
+
+token XPatternAction(const char * lexeme);
+token YPatternAction(const char * lexeme);
+token AndPatternAction(const char * lexeme);
+
+
+
+token InPatternAction(const char * lexeme);
+token IsPatternAction(const char * lexeme);
+token EqualPatternAction(const char * lexeme);
+
+token SubPatternAction(const char * lexeme);
+
+token MultPatternAction(const char * lexeme);
+
+token DivPatternAction(const char * lexeme);
+
+
+token AddPatternAction(const char * lexeme);
+token DataPatternAction(const char * lexeme);
+
+
+token UserValuePatternAction(const char * lexeme) ;
+
+
+token CommaPatternAction(const char * lexeme);
+token CurlyOpenPatternAction(const char * lexeme);
+
+token CurlyClosePatternAction(const char * lexeme);
+
+
+token SetPatternAction(const char * lexeme);
+
+token WithPatternAction(const char * lexeme);
+
+
+token ColorOptionPatternAction(const char * lexeme);
+
+
+token ColorPatternAction(const char * lexeme);
+
+
+token OpenParenthesisPatternAction(const char * lexeme);
+
+
+token CloseParenthesisPatternAction(const char * lexeme);
+
+token OpenBracketPatternAction(const char * lexeme);
+
+token CloseBracketPatternAction(const char * lexeme);
+
 token UnknownPatternAction(const char * lexeme, const int length);
 
 // Regla que no hace nada, permite ignorar parte de la entrada.

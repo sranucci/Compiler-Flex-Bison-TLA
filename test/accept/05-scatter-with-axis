@@ -1,0 +1,7 @@
+create chart scatter “Nube de puntos”
+
+where x is {1, 2, 3, 4, 5} and y is {2, 3, 4, 5, 6, 6, 7}
+
+with color green
+
+set x-axis "tiempo" set y-axis "dinero"
