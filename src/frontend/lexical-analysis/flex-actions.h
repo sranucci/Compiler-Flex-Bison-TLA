@@ -51,7 +51,6 @@ token AndPatternAction(const char * lexeme);
 
 token InPatternAction(const char * lexeme);
 token IsPatternAction(const char * lexeme);
-token EqualPatternAction(const char * lexeme);
 
 token SubPatternAction(const char * lexeme);
 
@@ -94,6 +93,28 @@ token OpenBracketPatternAction(const char * lexeme);
 token CloseBracketPatternAction(const char * lexeme);
 
 token UnknownPatternAction(const char * lexeme, const int length);
+
+token XAxisPatternAction(const char * lexeme);
+
+token YAxisPatternAction(const char * lexeme);
+
+token StepSeparatorPatternAction(const char * lexeme);
+
+token YAxisPatternAction(const char * lexeme);
+
+token EqualsPatternAction(const char * lexeme);
+
+token ValuePatternAction(const char * lexeme);
+
+
+
+token AddMathPatternAction(const char * lexeme);
+
+token SubMathPatternAction(const char * lexeme);
+
+token MultMathPatternAction(const char * lexeme);
+
+token DivMathPatternAction(const char * lexeme);
 
 // Regla que no hace nada, permite ignorar parte de la entrada.
 void IgnoredPatternAction(const char * lexeme, const int length);

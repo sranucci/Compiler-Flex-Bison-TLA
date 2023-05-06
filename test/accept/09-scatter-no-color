@@ -1,0 +1,5 @@
+create chart scatter "Nube de puntos"
+
+where x in [0: -5.4 : -1000] and  y in [0 :-99: -1000000.2]
+
+with color green

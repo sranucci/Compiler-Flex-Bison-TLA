@@ -23,7 +23,7 @@
 
 token LabelPatternAction(const char * lexeme){
 	printf("label\n");
-	yylval = LABEL;
+	yylval.token = LABEL;
 	return LABEL;
 }
 
@@ -68,7 +68,11 @@ token LinePatternAction(const char * lexeme){
 	return LINE;
 }
 
-
+token StepSeparatorPatternAction(const char * lexeme) {
+	printf("StepSeparator\n");
+	yylval.token = STEPSEPARATOR;
+	return STEPSEPARATOR;
+}
 
 token XPatternAction(const char * lexeme){
 	printf("X\n");
@@ -94,32 +98,33 @@ token InPatternAction(const char * lexeme){
 	return IN;
 }
 token IsPatternAction(const char * lexeme){
-	printf("Is");
+	printf("Is\n");
 	yylval.token = IS;
 	return IS;
 }
-token EqualPatternAction(const char * lexeme){
-	printf("Equal\n");
-	yylval.token = EQUAL;
-	return EQUAL;
+
+token AddMathPatternAction(const char * lexeme){
+	printf("ADDMATH\n");
+	yylval.token = ADDMATH;
+	return ADDMATH;
 }
 
-token SubPatternAction(const char * lexeme){
+token SubMathPatternAction(const char * lexeme){
 	printf("SUB\n");
-	yylval.token = SUB;
-	return SUB;
+	yylval.token = SUBMATH;
+	return SUBMATH;
 }
 
-token MultPatternAction(const char * lexeme){
+token MultMathPatternAction(const char * lexeme){
 	printf("MULT\n");
-	yylval.token = MULT;
-	return MULT;
+	yylval.token = MULTMATH;
+	return MULTMATH;
 }
 
-token DivPatternAction(const char * lexeme){
-	printf("DIV");
-	yylval.token = DIV;
-	return DIV;
+token DivMathPatternAction(const char * lexeme){
+	printf("DIV\n");
+	yylval.token = DIVMATH;
+	return DIVMATH;
 }
 
 

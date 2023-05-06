@@ -1,4 +1,4 @@
-create chart scatter “”
+create chart scatter ""
 
 where x is {1, 2, 3, 4, 5} and y is {}
 

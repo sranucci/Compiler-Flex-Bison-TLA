@@ -19,7 +19,7 @@
 
 /* Patrones reutilizables. */
 digit			[0-9]
-float           [0-9]+(\.[0-9]+)?
+float           \-?[0-9]+(\.[0-9]+)?
 endline			[\n]
 whitespace		[ \f\n\r\t\v]
 
@@ -28,10 +28,10 @@ whitespace		[ \f\n\r\t\v]
 
 
 
-"{"                                         { BEGIN(VALUELIST); return CurlyOpenPatternAction(yytext);}
+"{"                                         {  return CurlyOpenPatternAction(yytext);}
 {float}                                     { return UserValuePatternAction(yytext); }
-","                                         { return CommaPatternActino(yytext); }
-"}"                                         { BEGIN(INITIAL) return CurlyClosePatternAction(yytext);}
+","                                         { return CommaPatternAction(yytext); }
+"}"                                         {  return CurlyClosePatternAction(yytext);}
 
 
 
@@ -52,8 +52,6 @@ whitespace		[ \f\n\r\t\v]
 
 "in"                                        { return InPatternAction(yytext); }
 "is"                                        { return IsPatternAction(yytext); }
-"="                                         { return EqualPatternAction(yytext); }
-
 "add"                                       { return AddPatternAction(yytext); }
 "data"                                      { return DataPatternAction(yytext); }
 
@@ -63,20 +61,25 @@ whitespace		[ \f\n\r\t\v]
 
 "with"                                      { return WithPatternAction(yytext); }
 "color"                                     { return ColorPatternAction(yytext); }
-"red"|"blue"|"orange"|"yellow"|"black"      { return ColorOptionPatternAction(yytext); }
+"red"|"blue"|"orange"|"yellow"|"black"|"green"      { return ColorOptionPatternAction(yytext); }
 
-"+"											{ return AddPatternAction(yytext); }
-"-"											{ return SubPatternAction(yytext); }
-"*"											{ return MultPatternAction(yytext); }
-"/"											{ return DivPatternAction(yytext); }
+
+"+"											{ return AddMathPatternAction(yytext); }
+"-"											{ return SubMathPatternAction(yytext); }
+"*"											{ return MultMathPatternAction(yytext); }
+"/"											{ return DivMathPatternAction(yytext); }
 "="                                         { return EqualsPatternAction(yytext); }
 "("											{ return OpenParenthesisPatternAction(yytext); }
 ")"											{ return CloseParenthesisPatternAction(yytext); }
 "["                                         { return OpenBracketPatternAction(yytext); }
 "]"                                         { return CloseBracketPatternAction(yytext); }
+":"                                         { return StepSeparatorPatternAction(yytext); }
 "value"                                     { return ValuePatternAction(yytext); }
 
 									
+
+
+                                    
 {whitespace}								{ IgnoredPatternAction(yytext, yyleng); }
 .											{ return UnknownPatternAction(yytext, yyleng); }
 

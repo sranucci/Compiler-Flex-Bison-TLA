@@ -34,36 +34,13 @@
 	int add_data;
 	int set_axis;
 	int color;
-
+	int xpression;
+	int step_left;
+	int step_right;
+	int factor;
+	int constant;
 	// Terminales.
-	int add;
-	int create;
-	int chart;
-	int label;
-	int where;
-	int x;
-	int and;
-	int y;
-	int scatter;
-	int line;
-	int bar;
-	int pie;
-	int in;
-	int is;
-	int curlyopen;
-	int curlyclose;
-	int uservalue;
-	int comma;
-	int add;
-	int data;
-	int x-axis;
-	int y-axis;
-	int value;
-	int set;
-	int with;
-	int color;
-	int coloroption;
-	int equals;/
+	token token;
 }
 
 // IDs y tipos de los tokens terminales generados desde Flex.
@@ -85,17 +62,24 @@
 %token <token> CURLYCLOSE
 %token <token> USERVALUE
 %token <token> COMMA
-%token <token> ADD
 %token <token> DATA
-%token <token> X-AXIS
-%token <token> Y-AXIS
+%token <token> XAXIS
+%token <token> YAXIS
 %token <token> VALUE
 %token <token> SET
 %token <token> WITH
 %token <token> COLOR
 %token <token> COLOROPTION
 %token <token> EQUALS
-
+%token <token> OPENPARENTHESIS
+%token <token> CLOSEPARENTHESIS
+%token <token> OPENBRACKET
+%token <token> CLOSEBRACKET
+%token <token> STEPSEPARATOR
+%token <token> ADDMATH
+%token <token> SUBMATH
+%token <token> MULTMATH
+%token <token> DIVMATH
 
 // Tipos de dato para los no-terminales generados desde Bison.
 %type <program> program
@@ -116,17 +100,23 @@
 %type <add_data> add_data
 %type <set_axis> set_axis
 %type <color> color
+%type <step_left> step_left
+%type <step_right> step_right
+%type <xpression> xpression
+%type <factor> factor
+%type <constant> constant
 
 // Reglas de asociatividad y precedencia (de menor a mayor).
-%left ADD SUB
-%left MUL DIV
+%left ADDMATH SUBMATH
+%left MULTMATH DIVMATH
 
 // El símbolo inicial de la gramatica.
 %start program
 
 %%
 
-program: expressions	{ $$ = int ProgramGrammarAction(1);}
+program: expressions	{ $$ = ProgramGrammarAction(1); }
+;
 
 expressions: expression expressions { $$ = 0; }
 	| %empty { $$ = 0; }
@@ -157,11 +147,21 @@ data: IN interval { $$ = 0; }
 	| IS value_list { $$ = 0; }
 	;
 
-/*
-interval: /*(0; 5] o similares { $$ = 0; };
 
-interval_with_step: /*[-1; 1.5; 10) o similares { $$ = 0; };
-*/
+interval: step_left USERVALUE STEPSEPARATOR USERVALUE step_right { $$ = 0; }
+	;
+
+interval_with_step: step_left USERVALUE STEPSEPARATOR USERVALUE STEPSEPARATOR USERVALUE step_right { $$ = 0; }
+	;
+
+step_left: OPENPARENTHESIS { $$ = 0; }
+	| OPENBRACKET { $$ = 0; }
+	;
+	
+step_right: CLOSEPARENTHESIS { $$ = 0; }
+	| CLOSEBRACKET { $$ = 0; }
+	;
+
 
 value_list: CURLYOPEN value CURLYCLOSE { $$ = 0; };
 
@@ -170,18 +170,38 @@ value: USERVALUE  { $$ = 0; }
 	| USERVALUE COMMA value { $$ = 0; }
 	;
 
-y_data: data  { $$ = 0; }/*| = function*/
+y_data: data  { $$ = 0; }
+	| EQUALS function { $$ = 0; }
 	;
 
+
+function: xpression { $$ = 0; };
+
+
+xpression: xpression ADDMATH xpression					{ $$ = 0; }
+	| xpression SUBMATH xpression						{ $$ = 0; }
+	| xpression MULTMATH xpression						{ $$ = 0; }
+	| xpression DIVMATH xpression						{ $$ = 0; }
+	| factor											{ $$ = 0; }
+	;
+
+factor: OPENPARENTHESIS xpression CLOSEPARENTHESIS				{ $$ = 0; }
+	| constant														{ $$ = 0; }
+	;
+
+constant: USERVALUE													{ $$ = 0; }
+	| X { $$ = 0; }
+	| SUBMATH X { $$ = 0;}
+	;
 
 add_datas: add_data add_datas{ $$ = 0; }
 	| %empty { $$ = 0; }
 	;
 
-add_data: ADD DATA label VALUE EQUALS number color { $$ = 0; }
+add_data: ADD DATA LABEL VALUE EQUALS number color { $$ = 0; }
 ;
 
-set_axis: SET XAXIS label SET YAXIS label{ $$ = 0; }
+set_axis: SET XAXIS LABEL SET YAXIS LABEL { $$ = 0; }
 	| %empty{ $$ = 0; }
 	;
 

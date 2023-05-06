@@ -1,5 +1,5 @@
-create chart pie “grafico circular”
+create chart pie "grafico circular"
 
-add data “Gaseosa” value = 21 with color green
+add data "Gaseosa" value = 21 with color green
 
-add data “Agua” value = 69 with color orange
+add data "Agua" value = 69 with color red

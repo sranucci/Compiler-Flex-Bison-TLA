@@ -1,0 +1,9 @@
+create chart pie "grafico circular"
+
+add data "Gaseosa" value = 21.34 with color green
+
+add data "Agua" value = -69
+
+add data "Vino" value = -0.23 with color green
+
+add data "Gin" value = 69

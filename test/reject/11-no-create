@@ -1,4 +1,4 @@
-create chart scatter “Nube de puntos”
+chart scatter "Nube de puntos"
 
 where x is {1, 2, 3, 4, 5} and y is {2, 3, 4, 5, 6}
 

@@ -1,9 +1,9 @@
 create chart bar "grafico de barras"
 
-add data "Enero" value = 15 with color red
+add data "Enero" value = 15
 
 add data "Febrero" value = 4 with color yellow
 
 add data "Marzo" value = -15 with color red
 
-add data "Diciembre" value = -4.23 with color green
+add data "Diciembre" value = -4.23
