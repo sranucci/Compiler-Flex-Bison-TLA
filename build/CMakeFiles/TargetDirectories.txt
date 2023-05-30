@@ -1,0 +1,3 @@
+/home/santino/Documents/GitHub/Flex-Bison-Compiler/build/CMakeFiles/Compiler.dir
+/home/santino/Documents/GitHub/Flex-Bison-Compiler/build/CMakeFiles/edit_cache.dir
+/home/santino/Documents/GitHub/Flex-Bison-Compiler/build/CMakeFiles/rebuild_cache.dir

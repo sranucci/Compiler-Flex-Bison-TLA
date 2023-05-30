@@ -1,0 +1,42 @@
+[
+{
+  "directory": "/home/santino/Documents/GitHub/Flex-Bison-Compiler/build",
+  "command": "/usr/bin/c89-gcc   -g -static-libgcc -std=gnu99 -O3 -o CMakeFiles/Compiler.dir/src/main.c.o -c /home/santino/Documents/GitHub/Flex-Bison-Compiler/src/main.c",
+  "file": "/home/santino/Documents/GitHub/Flex-Bison-Compiler/src/main.c"
+},
+{
+  "directory": "/home/santino/Documents/GitHub/Flex-Bison-Compiler/build",
+  "command": "/usr/bin/c89-gcc   -g -static-libgcc -std=gnu99 -O3 -o CMakeFiles/Compiler.dir/src/backend/code-generation/generator.c.o -c /home/santino/Documents/GitHub/Flex-Bison-Compiler/src/backend/code-generation/generator.c",
+  "file": "/home/santino/Documents/GitHub/Flex-Bison-Compiler/src/backend/code-generation/generator.c"
+},
+{
+  "directory": "/home/santino/Documents/GitHub/Flex-Bison-Compiler/build",
+  "command": "/usr/bin/c89-gcc   -g -static-libgcc -std=gnu99 -O3 -o CMakeFiles/Compiler.dir/src/backend/domain-specific/calculator.c.o -c /home/santino/Documents/GitHub/Flex-Bison-Compiler/src/backend/domain-specific/calculator.c",
+  "file": "/home/santino/Documents/GitHub/Flex-Bison-Compiler/src/backend/domain-specific/calculator.c"
+},
+{
+  "directory": "/home/santino/Documents/GitHub/Flex-Bison-Compiler/build",
+  "command": "/usr/bin/c89-gcc   -g -static-libgcc -std=gnu99 -O3 -o CMakeFiles/Compiler.dir/src/backend/support/logger.c.o -c /home/santino/Documents/GitHub/Flex-Bison-Compiler/src/backend/support/logger.c",
+  "file": "/home/santino/Documents/GitHub/Flex-Bison-Compiler/src/backend/support/logger.c"
+},
+{
+  "directory": "/home/santino/Documents/GitHub/Flex-Bison-Compiler/build",
+  "command": "/usr/bin/c89-gcc   -g -static-libgcc -std=gnu99 -O3 -o CMakeFiles/Compiler.dir/src/frontend/lexical-analysis/flex-actions.c.o -c /home/santino/Documents/GitHub/Flex-Bison-Compiler/src/frontend/lexical-analysis/flex-actions.c",
+  "file": "/home/santino/Documents/GitHub/Flex-Bison-Compiler/src/frontend/lexical-analysis/flex-actions.c"
+},
+{
+  "directory": "/home/santino/Documents/GitHub/Flex-Bison-Compiler/build",
+  "command": "/usr/bin/c89-gcc   -g -static-libgcc -std=gnu99 -O3 -o CMakeFiles/Compiler.dir/src/frontend/lexical-analysis/flex-scanner.c.o -c /home/santino/Documents/GitHub/Flex-Bison-Compiler/src/frontend/lexical-analysis/flex-scanner.c",
+  "file": "/home/santino/Documents/GitHub/Flex-Bison-Compiler/src/frontend/lexical-analysis/flex-scanner.c"
+},
+{
+  "directory": "/home/santino/Documents/GitHub/Flex-Bison-Compiler/build",
+  "command": "/usr/bin/c89-gcc   -g -static-libgcc -std=gnu99 -O3 -o CMakeFiles/Compiler.dir/src/frontend/syntactic-analysis/bison-actions.c.o -c /home/santino/Documents/GitHub/Flex-Bison-Compiler/src/frontend/syntactic-analysis/bison-actions.c",
+  "file": "/home/santino/Documents/GitHub/Flex-Bison-Compiler/src/frontend/syntactic-analysis/bison-actions.c"
+},
+{
+  "directory": "/home/santino/Documents/GitHub/Flex-Bison-Compiler/build",
+  "command": "/usr/bin/c89-gcc   -g -static-libgcc -std=gnu99 -O3 -o CMakeFiles/Compiler.dir/src/frontend/syntactic-analysis/bison-parser.c.o -c /home/santino/Documents/GitHub/Flex-Bison-Compiler/src/frontend/syntactic-analysis/bison-parser.c",
+  "file": "/home/santino/Documents/GitHub/Flex-Bison-Compiler/src/frontend/syntactic-analysis/bison-parser.c"
+}
+]
