@@ -6,39 +6,30 @@
 
 // Tipos de dato utilizados en las variables semánticas ($$, $1, $2, etc.).
 %union {
-	// No-terminales (backend).
-	/*
-	Program program;
-	Expression expression;
-	Factor factor;
-	Constant constant;
-	...
-	*/
-
-	// No-terminales (frontend).
-	int program;
-	int expressions;
-	int expression;
-	int chart_type;
-	int chart_type_1;
-	int chart_type_2;
-	int number;
-	int data;
-	int interval;
-	int interval_with_step;
-	int value_list;
-	int value;
-	int y_data;
-	int function;
-	int add_datas;
-	int add_data;
-	int set_axis;
-	int color;
-	int xpression;
-	int step_left;
-	int step_right;
-	int factor;
-	int constant;
+	// No-terminales
+	Program * program;
+	Expressions * expressions;
+	Expression * expression;
+	ChartType * chart_type;
+	ChartType1 * chart_type_1;
+	ChartType2 * chart_type_2;
+	Number * number;
+	Data * data;
+	Interval * interval;
+	IntervalWithStep * interval_with_step;
+	ValueList * value_list;
+	Value * value;
+	YData * y_data;
+	Function * function;
+	AddDatas * add_datas;
+	AddData * add_data;
+	SetAxis * set_axis;
+	Color * color;
+	Xpression * xpression;
+	StepLeft * step_left;
+	StepRight * step_right;
+	Factor * factor;
+	Constants * constant;
 	// Terminales.
 	token token;
 }

@@ -6,6 +6,7 @@
 * auto-referenciarse, como es el caso de una "Expression", que está compuesta
 * de otras 2 expresiones.
 */
+typedef struct Program Program;
 typedef struct Expression Expression;
 typedef struct Expressions Expressions;
 typedef struct ChartType ChartType;
@@ -51,37 +52,80 @@ typedef struct {
 * posee según el valor de este enumerado.
 */
 
+typedef struct Program {
+	Expressions * expressions;
+} Program;
+
+typedef enum ExpressionsState {
+	NOT_EMPTY,
+	EMPTY,
+} ExpressionsState;
+
 typedef struct Expressions {
+	ExpressionsState expressionsState;
+
+	//NOT_EMPTY
 	Expression * expression;
 	Expressions * expressions;
+
+	//EMPTY
 } Expressions;
 
 typedef struct Expression {
 	ChartType * chartType;
 } Expression;
 
+typedef enum ChartTypeState {
+	TYPE1,
+	TYPE2,
+} ChartTypeState;
+
 typedef struct ChartType {
+	ChartTypeState chartTypeState;
+
+	//TYPE1
 	ChartType1 * chartType1;
 	Data * data;
 	YData * yData;
 	SetAxis * setAxis;
+
+	//TYPE2
 	ChartType2 * chartType2;
 	AddDatas * addDatas;
 } ChartType;
 
+typedef enum ChartType1State {
+	SCATTERTYPE,
+	LINETYPE,
+} ChartType1State;
+
 typedef struct ChartType1 {
-	int a;
+	//puede ser 'scatter' o 'line'
+	ChartType1State ChartType1State;
 } ChartType1;
 
+typedef enum ChartType2State {
+	BARTYPE,
+	PIETYPE,
+} ChartType2State;
+
 typedef struct ChartType2 {
-	int a;
+	//puede ser 'bar' o 'pie'
+	ChartType2State chartType2State;
 } ChartType2;
 
 typedef struct Number {
-	int a;
+	int a; //puede ser cualquier numero
 } Number;
 
+typedef enum DataState {
+	INTERVAL,
+	INTERVALWSTEP,
+	VALUELIST,
+} DataState;
+
 typedef struct Data {
+	DataState dataState;
 	Interval * interval;
 	IntervalWithStep * intervalWithStep;
 	ValueList * valueList;
@@ -97,30 +141,70 @@ typedef struct IntervalWithStep {
 	StepRight * stepRight;
 } IntervalWithStep;
 
+typedef enum StepLeftState {
+	OPENPAR,
+	OPENBRA,
+} StepLeftState;
+
 typedef struct StepLeft {
-	int a;
+	StepLeftState stepLeftState;
 } StepLeft;
 
+typedef enum StepRightState {
+	CLOSEPAR,
+	CLOSEBRA,
+} StepRightState;
+
 typedef struct StepRight {
-	int a;
+	StepRightState stepRightState;
 } StepRight;
+
 
 typedef struct ValueList {
 	Value * value;
 } ValueList;
 
+typedef enum ValueState {
+	ONLYVALUE,
+	MOREVALUES,
+} ValueState;
+
 typedef struct Value {
+	ValueState valueState;
+
+	//MOREVALUES
 	Value * value;
+
+	//ONLYVALUE
 } Value;
 
+typedef enum YDataState {
+	ISDATA,
+	FUNCTION,
+} YDataState;
+
 typedef struct YData {
+	YDataState yDataState;
+
+	//DATA
 	Data * data;
+
+	//FUNCTION
 	Function * function;
 } YData;
 
+typedef enum ColorState {
+	WITHOUTCOLOR,
+	WITHCOLOR,
+} ColorState;
 
 typedef struct Color{
+	ColorState colorState;
+
+	//NOTEMPTY
 	int a;
+
+	//EMPTY
 } Color;
 
 typedef struct AddData {
@@ -128,10 +212,19 @@ typedef struct AddData {
 	Color * color;
 } AddData;
 
+typedef enum AddDatasState {
+	NODATA,
+	WITHDATA,
+} AddDatasState;
 
 typedef struct AddDatas {
+	AddDatasState addDatasState;
+
+	//WITHDATA
 	AddData * addData;
 	AddDatas * addDatas;
+
+	//NODATA
 } AddDatas;
 
 typedef enum constants_states {
@@ -153,7 +246,11 @@ typedef enum factor_states {
 
 typedef struct Factor {
 	factor_states state;
+
+	//CONSTANT
 	Constant * constant;
+
+	//WITHPARENTHESIS
 	Xpression * Xpression;
 } Factor;
 
@@ -183,13 +280,5 @@ typedef enum SetAxisState {
 typedef struct SetAxis {
 	SetAxisState setAxisState;
 } SetAxis;
-
-
-
-//---------------- De La Catedra -------------------
-
-typedef struct {
-	Expressions * expression;
-} Program;
 
 #endif
