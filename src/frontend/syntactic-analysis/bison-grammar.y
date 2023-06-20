@@ -29,9 +29,11 @@
 	StepLeft * step_left;
 	StepRight * step_right;
 	Factor * factor;
-	Constants * constant;
+	Constant * constant;
 	// Terminales.
 	token token;
+	double numberData;
+	char * string;
 }
 
 // IDs y tipos de los tokens terminales generados desde Flex.
@@ -51,7 +53,7 @@
 %token <token> IS
 %token <token> CURLYOPEN
 %token <token> CURLYCLOSE
-%token <token> USERVALUE
+%token <numberData> USERVALUE
 %token <token> COMMA
 %token <token> DATA
 %token <token> XAXIS
@@ -60,7 +62,7 @@
 %token <token> SET
 %token <token> WITH
 %token <token> COLOR
-%token <token> COLOROPTION
+%token <string> COLOROPTION
 %token <token> EQUALS
 %token <token> OPENPARENTHESIS
 %token <token> CLOSEPARENTHESIS
@@ -106,18 +108,18 @@
 
 %%
 
-program: expressions	{ $$ = ProgramGrammarAction(1); }
+program: expressions	{ $$ = ProgramGrammarAction($1); }
 ;
 
-expressions: expression expressions { $$ = 0; }
+expressions: expression expressions { $$ = ExpressionsGrammarAction($1,$2); }
 	| %empty { $$ = 0; }
 	;
 
-expression: CREATE CHART chart_type { $$ = 0; }
+expression: CREATE CHART chart_type { $$ = ExpressionGrammarAction($3); }
 ;
 
 chart_type: chart_type_1 LABEL WHERE X data AND Y y_data color set_axis { $$ = 0; }
-	| chart_type_2 LABEL add_datas { $$ = 0; }
+	| chart_type_2 LABEL add_datas { $$ = ChartType2GrammarAction($1,$3); }
 	;
 
 
@@ -125,12 +127,12 @@ chart_type_1: SCATTER { $$ = 0; }
 	| LINE { $$ = 0; }
 	;
 
-chart_type_2: BAR { $$ = 0; }
-	| PIE { $$ = 0; }
+chart_type_2: BAR { $$ = BarGrammarAction(); }
+	| PIE { $$ = PieGrammarAction(); }
 	;
 
 
-number: USERVALUE { $$ = 0; }
+number: USERVALUE { $$ = NumberGrammarAction($1); }
 ;
 
 data: IN interval { $$ = 0; }
@@ -185,18 +187,18 @@ constant: USERVALUE													{ $$ = 0; }
 	| SUBMATH X { $$ = 0;}
 	;
 
-add_datas: add_data add_datas{ $$ = 0; }
+add_datas: add_data add_datas{ $$ = AddDatasGrammarAction($1,$2); }
 	| %empty { $$ = 0; }
 	;
 
-add_data: ADD DATA LABEL VALUE EQUALS number color { $$ = 0; }
+add_data: ADD DATA LABEL VALUE EQUALS number color { $$ = DataGrammarAction($6,$7) ; }
 ;
 
 set_axis: SET XAXIS LABEL SET YAXIS LABEL { $$ = 0; }
 	| %empty{ $$ = 0; }
 	;
 
-color: WITH COLOR COLOROPTION { $$ = 0; }
+color: WITH COLOR COLOROPTION { $$ = ColorGrammarAction($3); }
 	| %empty { $$ = 0; }
 	;
 

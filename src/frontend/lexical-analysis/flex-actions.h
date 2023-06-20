@@ -63,8 +63,7 @@ token AddPatternAction(const char * lexeme);
 token DataPatternAction(const char * lexeme);
 
 
-token UserValuePatternAction(const char * lexeme) ;
-
+token UserValuePatternAction(const char * lexeme,int length) ;
 
 token CommaPatternAction(const char * lexeme);
 token CurlyOpenPatternAction(const char * lexeme);
@@ -77,7 +76,7 @@ token SetPatternAction(const char * lexeme);
 token WithPatternAction(const char * lexeme);
 
 
-token ColorOptionPatternAction(const char * lexeme);
+token ColorOptionPatternAction(const char * lexeme,int length);
 
 
 token ColorPatternAction(const char * lexeme);
@@ -100,13 +99,9 @@ token YAxisPatternAction(const char * lexeme);
 
 token StepSeparatorPatternAction(const char * lexeme);
 
-token YAxisPatternAction(const char * lexeme);
-
 token EqualsPatternAction(const char * lexeme);
 
 token ValuePatternAction(const char * lexeme);
-
-
 
 token AddMathPatternAction(const char * lexeme);
 

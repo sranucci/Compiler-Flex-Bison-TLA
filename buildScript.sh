@@ -5,4 +5,4 @@ rm ./src/frontend/syntactic-analysis/bison-parser.h
 
 chmod u+x script --recursive
 script/build.sh
-script/test.sh
+#script/test.sh

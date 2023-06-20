@@ -24,7 +24,7 @@ typedef struct YData YData;
 typedef struct Color Color;
 typedef struct AddData AddData;
 typedef struct AddDatas AddDatas;
-typedef struct Constants Constants;
+typedef struct Constant Constant;
 typedef struct Factor Factor;
 typedef struct Xpression Xpression;
 typedef struct Function Function;
@@ -38,9 +38,6 @@ typedef struct SetAxis SetAxis;
 * Para cada no-terminal se define una nueva estructura que representa su tipo
 * de dato y, por lo tanto, su nodo en el AST (Árbol de Sintaxis Abstracta).
 */
-typedef struct {
-	int value;
-} Constant;
 
 /**
 * En caso de que un no-terminal ("Factor" en este caso), posea más de una
@@ -70,6 +67,7 @@ typedef struct Expressions {
 
 	//EMPTY
 } Expressions;
+
 
 typedef struct Expression {
 	ChartType * chartType;
@@ -101,7 +99,7 @@ typedef enum ChartType1State {
 
 typedef struct ChartType1 {
 	//puede ser 'scatter' o 'line'
-	ChartType1State ChartType1State;
+	ChartType1State chartType1State;
 } ChartType1;
 
 typedef enum ChartType2State {
@@ -115,7 +113,7 @@ typedef struct ChartType2 {
 } ChartType2;
 
 typedef struct Number {
-	int a; //puede ser cualquier numero
+	double value; //puede ser cualquier numero
 } Number;
 
 typedef enum DataState {
@@ -193,14 +191,19 @@ typedef struct YData {
 	Function * function;
 } YData;
 
-typedef enum ColorState {
+typedef enum  {
 	WITHOUTCOLOR,
 	WITHCOLOR,
 } ColorState;
 
+typedef enum {
+	REDCOLOR,
+	BLUECOLOR
+} SelectedColor;
+
 typedef struct Color{
 	ColorState colorState;
-
+	SelectedColor col;
 	//NOTEMPTY
 	int a;
 
@@ -227,31 +230,31 @@ typedef struct AddDatas {
 	//NODATA
 } AddDatas;
 
-typedef enum constants_states {
+typedef enum constant_states {
 	USERVALUEDATA,
 	XDATA,
 	SUBMATHDATA,
-} constants_states;
+} constant_states;
 
-typedef struct Constants {
-	constants_states state;
+typedef struct Constant {
+	constant_states state;
 	
-} Constants;
+} Constant;
 
-typedef enum factor_states {
+typedef enum factorStates {
 	CONSTANT,
 	WITHPARENTHESIS
-} factor_states;
+} factorStates;
 
 
 typedef struct Factor {
-	factor_states state;
+	factorStates state;
 
 	//CONSTANT
 	Constant * constant;
 
 	//WITHPARENTHESIS
-	Xpression * Xpression;
+	Xpression * xpression;
 } Factor;
 
 

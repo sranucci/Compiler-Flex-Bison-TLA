@@ -29,7 +29,7 @@ whitespace		[ \f\n\r\t\v]
 
 
 "{"                                         {  return CurlyOpenPatternAction(yytext);}
-{float}                                     { return UserValuePatternAction(yytext); }
+{float}                                     { return UserValuePatternAction(yytext,yyleng); }
 ","                                         { return CommaPatternAction(yytext); }
 "}"                                         {  return CurlyClosePatternAction(yytext);}
 
@@ -61,7 +61,7 @@ whitespace		[ \f\n\r\t\v]
 
 "with"                                      { return WithPatternAction(yytext); }
 "color"                                     { return ColorPatternAction(yytext); }
-"red"|"blue"|"orange"|"yellow"|"black"|"green"      { return ColorOptionPatternAction(yytext); }
+"red"|"blue"|"orange"|"yellow"|"black"|"green"      { return ColorOptionPatternAction(yytext,yyleng); }
 
 
 "+"											{ return AddMathPatternAction(yytext); }
