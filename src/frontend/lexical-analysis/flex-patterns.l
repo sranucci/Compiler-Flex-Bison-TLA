@@ -36,7 +36,7 @@ whitespace		[ \f\n\r\t\v]
 
 
 
-\"[a-zA-z ]+\"                              { return LabelPatternAction(yytext); }
+\"[a-zA-z ]+\"                              { return LabelPatternAction(yytext,yyleng); }
 "create"                                    { return CreatePatternAction(yytext); }
 "chart"                                     { return ChartPatternAction(yytext); }
 "where"                                     { return WherePatternAction(yytext); }

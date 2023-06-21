@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "charttype2.h": "c",
+        "string.h": "c",
+        "abstract-syntax-tree.h": "c",
+        "calculator.h": "c"
+    },
+    "liveServer.settings.port": 5501
+}

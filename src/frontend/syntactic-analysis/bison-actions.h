@@ -17,15 +17,20 @@
 
 ChartType2 * BarGrammarAction();
 ChartType2 * PieGrammarAction();
-ChartType * ChartType2GrammarAction(ChartType2 * ct2, AddDatas * data);
+ChartType * ChartType2GrammarAction(ChartType2 * ct2,char * graphName, AddDatas * data);
 Number * NumberGrammarAction(double a);
 Color * ColorGrammarAction(char * string);
-AddData * DataGrammarAction(Number * number, Color * color);
 Expression * ExpressionGrammarAction(ChartType *chart);
-Expressions * ExpressionsGrammarAction(Expression * expression, Expressions * expressions);
-Program * ProgramGrammarAction(Expressions * expressions);
-AddDatas * AddDatasGrammarAction(AddData * data, AddDatas * datas);
 
+AddData * DataGrammarAction(char * dataName,Number * number, Color * color);
+Program * ProgramGrammarAction(Expression * expression);
+AddDatas * AddDatasGrammarAction(AddData * data, AddDatas * datas);
+AddDatas * EmptyDatasGrammarAction();
+
+Color * EmptyColorGrammarAction();
+
+
+/*
 void freeProgram(Program * program);
 void freeExpressions(Expressions * expressions);
 void freeExpression(Expression * expression);
@@ -49,5 +54,7 @@ void freeFactor(Factor * factor);
 void freeXpression(Xpression * xpression);
 void freeFunction(Function * function);
 void freeSetAxis(SetAxis * setAxis);
+
+*/
 
 #endif

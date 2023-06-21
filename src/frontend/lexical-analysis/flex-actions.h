@@ -21,7 +21,7 @@
 
 // Patrones terminales del lenguaje diseñado.
 
-token LabelPatternAction(const char * lexeme);
+token LabelPatternAction(const char * lexeme,int length);
 
 
 

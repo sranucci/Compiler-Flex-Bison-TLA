@@ -8,7 +8,7 @@
 %union {
 	// No-terminales
 	Program * program;
-	Expressions * expressions;
+
 	Expression * expression;
 	ChartType * chart_type;
 	ChartType1 * chart_type_1;
@@ -40,7 +40,7 @@
 %token <token> ADD
 %token <token> CREATE
 %token <token> CHART 
-%token <token> LABEL
+%token <string> LABEL
 %token <token> WHERE
 %token <token> X
 %token <token> AND
@@ -76,7 +76,6 @@
 
 // Tipos de dato para los no-terminales generados desde Bison.
 %type <program> program
-%type <expressions> expressions
 %type <expression> expression
 %type <chart_type> chart_type
 %type <chart_type_1> chart_type_1
@@ -108,18 +107,14 @@
 
 %%
 
-program: expressions	{ $$ = ProgramGrammarAction($1); }
+program: expression	{ $$ = ProgramGrammarAction($1); }
 ;
-
-expressions: expression expressions { $$ = ExpressionsGrammarAction($1,$2); }
-	| %empty { $$ = 0; }
-	;
 
 expression: CREATE CHART chart_type { $$ = ExpressionGrammarAction($3); }
 ;
 
 chart_type: chart_type_1 LABEL WHERE X data AND Y y_data color set_axis { $$ = 0; }
-	| chart_type_2 LABEL add_datas { $$ = ChartType2GrammarAction($1,$3); }
+	| chart_type_2 LABEL add_datas { $$ = ChartType2GrammarAction($1,$2,$3); }
 	;
 
 
@@ -187,19 +182,21 @@ constant: USERVALUE													{ $$ = 0; }
 	| SUBMATH X { $$ = 0;}
 	;
 
+
+add_data: ADD DATA LABEL VALUE EQUALS number color { $$ = DataGrammarAction($3,$6,$7) ; }
+;
+
 add_datas: add_data add_datas{ $$ = AddDatasGrammarAction($1,$2); }
-	| %empty { $$ = 0; }
+	| %empty { $$ = EmptyDatasGrammarAction(); }
 	;
 
-add_data: ADD DATA LABEL VALUE EQUALS number color { $$ = DataGrammarAction($6,$7) ; }
-;
 
 set_axis: SET XAXIS LABEL SET YAXIS LABEL { $$ = 0; }
 	| %empty{ $$ = 0; }
 	;
 
 color: WITH COLOR COLOROPTION { $$ = ColorGrammarAction($3); }
-	| %empty { $$ = 0; }
+	| %empty { $$ = EmptyColorGrammarAction(); }
 	;
 
 

@@ -50,7 +50,7 @@ typedef struct SetAxis SetAxis;
 */
 
 typedef struct Program {
-	Expressions * expressions;
+	Expression * expression;
 } Program;
 
 typedef enum ExpressionsState {
@@ -191,28 +191,26 @@ typedef struct YData {
 	Function * function;
 } YData;
 
-typedef enum  {
-	WITHOUTCOLOR,
-	WITHCOLOR,
-} ColorState;
+
+
 
 typedef enum {
 	REDCOLOR,
-	BLUECOLOR
+	BLUECOLOR,
+	ORANGECOLOR,
+	YELLOWCOLOR,
+	BLACKCOLOR,
+	GREENCOLOR
 } SelectedColor;
 
 typedef struct Color{
-	ColorState colorState;
 	SelectedColor col;
-	//NOTEMPTY
-	int a;
-
-	//EMPTY
 } Color;
 
 typedef struct AddData {
 	Number * number;
 	Color * color;
+	char * dataName;
 } AddData;
 
 typedef enum AddDatasState {

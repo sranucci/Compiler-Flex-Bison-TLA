@@ -22,9 +22,12 @@
 
 //nuestras funciones
 
-token LabelPatternAction(const char * lexeme){
+token LabelPatternAction(const char * lexeme,int yylength){
 	printf("label\n");
-	yylval.token = LABEL;
+
+	char * str = calloc(1,yylength + 1);
+	strncpy(str,lexeme,yylength);
+	yylval.string = str;
 	return LABEL;
 }
 

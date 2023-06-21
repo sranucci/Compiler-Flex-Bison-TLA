@@ -1,3 +1,2 @@
 
-v =  src/test/accept/$1
-script/start.sh $v 
+./script/start.sh ./test/accept/08-pie-chart-floats 
