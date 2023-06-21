@@ -31,4 +31,5 @@ void outputBarNumbers(char * numbers);
 void outputColors(char * colors);
 void getGraphName(char * graphName);
 void getChartType(char * buffer);
+void freeCT2Data();
 #endif

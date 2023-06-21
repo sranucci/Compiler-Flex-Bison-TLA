@@ -3,7 +3,8 @@
 #include "backend/support/shared.h"
 #include "frontend/syntactic-analysis/bison-parser.h"
 #include <stdio.h>
-
+#include "backend/support/garbageCollector.h"
+#include "backend/domain-specific/calculator.h"
 // Estado de la aplicación.
 CompilerState state;
 
@@ -46,5 +47,9 @@ const int main(const int argumentCount, const char ** arguments) {
 			LogError("Error desconocido mientras se ejecutaba el analizador Bison (codigo %d).", result);
 	}
 	LogInfo("Fin.");
+	//liberamos con garbage collector
+	freeAll();
+	//liberamos lista CT2
+	freeCT2Data();
 	return result;
 }

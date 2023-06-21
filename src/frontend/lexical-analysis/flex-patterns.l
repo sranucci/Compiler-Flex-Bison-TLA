@@ -50,7 +50,6 @@ whitespace		[ \f\n\r\t\v]
 "y"                                         { return YPatternAction(yytext); }
 "and"                                       { return AndPatternAction(yytext); }
 
-"in"                                        { return InPatternAction(yytext); }
 "is"                                        { return IsPatternAction(yytext); }
 "add"                                       { return AddPatternAction(yytext); }
 "data"                                      { return DataPatternAction(yytext); }
@@ -64,16 +63,6 @@ whitespace		[ \f\n\r\t\v]
 "red"|"blue"|"orange"|"yellow"|"black"|"green"      { return ColorOptionPatternAction(yytext,yyleng); }
 
 
-"+"											{ return AddMathPatternAction(yytext); }
-"-"											{ return SubMathPatternAction(yytext); }
-"*"											{ return MultMathPatternAction(yytext); }
-"/"											{ return DivMathPatternAction(yytext); }
-"="                                         { return EqualsPatternAction(yytext); }
-"("											{ return OpenParenthesisPatternAction(yytext); }
-")"											{ return CloseParenthesisPatternAction(yytext); }
-"["                                         { return OpenBracketPatternAction(yytext); }
-"]"                                         { return CloseBracketPatternAction(yytext); }
-":"                                         { return StepSeparatorPatternAction(yytext); }
 "value"                                     { return ValuePatternAction(yytext); }
 
 									

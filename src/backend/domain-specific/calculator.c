@@ -192,3 +192,16 @@ void getChartType(char * buffer){
 
     strcpy(buffer,message);
 }
+
+
+void freeCT2Data(){
+    ChartType2Node * current = getSingletonInstance()->first;
+
+    while (current != NULL)
+    {
+        ChartType2Node * toFree = current;
+        current = current->next;
+        free(toFree);
+    }
+    
+}

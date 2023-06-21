@@ -82,21 +82,13 @@
 %type <chart_type_2> chart_type_2
 %type <number> number
 %type <data> data
-%type <interval> interval
-%type <interval_with_step> interval_with_step
 %type <value_list> value_list
 %type <value> value
 %type <y_data> y_data
-%type <function> function
 %type <add_datas> add_datas
 %type <add_data> add_data
 %type <set_axis> set_axis
 %type <color> color
-%type <step_left> step_left
-%type <step_right> step_right
-%type <xpression> xpression
-%type <factor> factor
-%type <constant> constant
 
 // Reglas de asociatividad y precedencia (de menor a mayor).
 %left ADDMATH SUBMATH
@@ -130,26 +122,8 @@ chart_type_2: BAR { $$ = BarGrammarAction(); }
 number: USERVALUE { $$ = NumberGrammarAction($1); }
 ;
 
-data: IN interval { $$ = 0; }
-	| IN interval_with_step { $$ = 0; }
-	| IS value_list { $$ = 0; }
+data: IS value_list { $$ = 0; }
 	;
-
-
-interval: step_left USERVALUE STEPSEPARATOR USERVALUE step_right { $$ = 0; }
-	;
-
-interval_with_step: step_left USERVALUE STEPSEPARATOR USERVALUE STEPSEPARATOR USERVALUE step_right { $$ = 0; }
-	;
-
-step_left: OPENPARENTHESIS { $$ = 0; }
-	| OPENBRACKET { $$ = 0; }
-	;
-	
-step_right: CLOSEPARENTHESIS { $$ = 0; }
-	| CLOSEBRACKET { $$ = 0; }
-	;
-
 
 value_list: CURLYOPEN value CURLYCLOSE { $$ = 0; };
 
@@ -159,27 +133,6 @@ value: USERVALUE  { $$ = 0; }
 	;
 
 y_data: data  { $$ = 0; }
-	| EQUALS function { $$ = 0; }
-	;
-
-
-function: xpression { $$ = 0; };
-
-
-xpression: xpression ADDMATH xpression					{ $$ = 0; }
-	| xpression SUBMATH xpression						{ $$ = 0; }
-	| xpression MULTMATH xpression						{ $$ = 0; }
-	| xpression DIVMATH xpression						{ $$ = 0; }
-	| factor											{ $$ = 0; }
-	;
-
-factor: OPENPARENTHESIS xpression CLOSEPARENTHESIS				{ $$ = 0; }
-	| constant														{ $$ = 0; }
-	;
-
-constant: USERVALUE													{ $$ = 0; }
-	| X { $$ = 0; }
-	| SUBMATH X { $$ = 0;}
 	;
 
 

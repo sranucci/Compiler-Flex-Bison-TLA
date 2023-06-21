@@ -2,6 +2,7 @@
 #include "flex-actions.h"
 #include <stdlib.h>
 #include <string.h>
+#include "../../backend/support/garbageCollector.h"
 
 /**
  * Implementación de "flex-actions.h".
@@ -26,6 +27,7 @@ token LabelPatternAction(const char * lexeme,int yylength){
 	printf("label\n");
 
 	char * str = calloc(1,yylength + 1);
+	addToGarbageCollector((void *) str);
 	strncpy(str,lexeme,yylength);
 	yylval.string = str;
 	return LABEL;
@@ -190,6 +192,7 @@ token WithPatternAction(const char * lexeme){
 token ColorOptionPatternAction(const char * lexeme,int length){
 	printf("COLOROPTION\n");
 	char * color = calloc(1,length + 1);
+	addToGarbageCollector((void *) color);
 	strncpy(color,lexeme,length);
 	yylval.string = color;
 	return COLOROPTION;
