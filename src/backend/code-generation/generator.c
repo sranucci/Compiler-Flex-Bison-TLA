@@ -1,10 +1,10 @@
 #include "../support/logger.h"
 #include "generator.h"
 #include <string.h>
-#include "../domain-specific/calculator.h"
+#include "../support/chartType1Singleton.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "../support/chartType1Singleton.h"
+#include "../support/chartType2Singleton.h"
 
 /**
  * Implementación de "generator.h".
@@ -38,38 +38,49 @@ static void writeChartType2(FILE * file){
 
 static void writeChartType1(FILE * file){
 	char graphName[DATASETSIZE];
+	char yAxis[DATASETSIZE];
+	char xAxis[DATASETSIZE];
+
 	getChartType1GraphName(graphName);
-	if ( getChartType1State() == SCATTERTYPE){
-		char coordinates[DATASETSIZE];
-		char color[DATASETSIZE];
-		getDataAsScatter(coordinates);
-		char * colorOutput;
-		if ( getChartType1Color(color)){
+	char * outputXaxis;
+	if ( getChartType1XAxisLabel(xAxis)){
+		outputXaxis = xAxis;
+	} else {
+		outputXaxis = "X-Axis";
+	}
+	char * outputYaxis;
+	if (getChartType1YAxisLabel(yAxis)){
+		outputYaxis = yAxis;
+	} else {
+		outputYaxis = "Y-Axis";
+	}
+
+	char color[DATASETSIZE];
+	char * colorOutput;
+
+
+	if ( getChartType1Color(color)){
 			colorOutput = color;
 		} else {
 			colorOutput = "blue";
 		}
-		char yAxis[DATASETSIZE];
-		char xAxis[DATASETSIZE];
-		char * outputXaxis;
-		if ( getChartType1XAxisLabel(xAxis)){
-			outputXaxis = xAxis;
-		} else {
-			outputXaxis = "X-Axis";
-		}
 
-		char * outputYaxis;
-		if (getChartType1YAxisLabel(yAxis)){
-			outputYaxis = yAxis;
-		} else {
-			outputYaxis = "Y-Axis";
-		}
+	if ( getChartType1State() == SCATTERTYPE){
+		char coordinates[DATASETSIZE];
+		getDataAsScatter(coordinates);
+		
+		
 
 		fprintf(file,"new Chart(ctx, { type: 'scatter' ,");
 		fprintf(file," data: { datasets: [{ label: '%s', data: [ %s ], pointBackgroundColor: '%s', pointBorderColor: '%s', pointRadius: 5, pointHoverRadius: 8, }]}",graphName,coordinates, colorOutput,colorOutput);
 		fprintf(file,",options: { title: { display: true, text: '%s' }, scales: { x: { type: 'linear', position: 'bottom', title: { display: true, text: '%s' } },y: { type: 'linear',position: 'left', title: { display: true, text: '%s' } } } }});",graphName,outputXaxis,outputYaxis);
-	} else {
-
+	} else {		
+		char xAxisData[DATASETSIZE];
+		char yAxisData[DATASETSIZE];
+		getXandYAxisData(xAxisData,yAxisData);
+		fprintf(file,"new Chart(ctx, { type: 'line' ,");
+		fprintf(file," data: { labels: [ %s ], datasets: [{ label: 'Data', data: [ %s ], backgroundColor: 'rgba(0, 123, 255, 0.5)', borderColor: '%s', borderWidth: 1, }]},",xAxisData,yAxisData,colorOutput);
+		fprintf(file,"options: { title: { display: true, text: '%s' }, scales: { x: { type: 'linear', position: 'bottom', title: { display: true, text: '%s' } },y: { type: 'linear',position: 'left', title: { display: true, text: '%s' } } } }});",graphName,outputXaxis,outputYaxis);
 	}
 
 }

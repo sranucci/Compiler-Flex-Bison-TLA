@@ -62,10 +62,10 @@ endif ()
 add_executable(Compiler
 	src/main.c
 	src/backend/code-generation/generator.c
-	src/backend/domain-specific/calculator.c
 	src/backend/support/logger.c
 	src/backend/support/garbageCollector.c
 	src/backend/support/chartType1Singleton.c
+	src/backend/support/chartType2Singleton.c
 	src/frontend/lexical-analysis/flex-actions.c
 	src/frontend/lexical-analysis/flex-scanner.c
 	src/frontend/syntactic-analysis/bison-actions.c

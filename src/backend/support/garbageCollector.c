@@ -43,6 +43,7 @@ static masterMemoryNode * getGarbageCollectorSingletonInstance(){
 
 
 
+
 void addToGarbageCollector(void *memDir) {
     masterMemoryNode *gcInstance = getGarbageCollectorSingletonInstance();
     
@@ -59,6 +60,13 @@ void addToGarbageCollector(void *memDir) {
         }
         currentNode->next = newNode;
     }
+}
+
+
+void * getMemory(int bytes){
+    void * memDir = calloc(1,bytes);
+    addToGarbageCollector(memDir);
+    return memDir;
 }
 
 void freeAll() {

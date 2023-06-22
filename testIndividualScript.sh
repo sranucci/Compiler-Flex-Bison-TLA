@@ -1,2 +1,2 @@
 
-./script/start.sh ./test/accept/05-scatter-with-axis
+./script/start.sh ./test/accept/09-scatter-no-color

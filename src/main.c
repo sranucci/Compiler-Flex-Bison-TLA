@@ -4,7 +4,8 @@
 #include "frontend/syntactic-analysis/bison-parser.h"
 #include <stdio.h>
 #include "backend/support/garbageCollector.h"
-#include "backend/domain-specific/calculator.h"
+#include "backend/support/chartType1Singleton.h"
+#include "backend/support/chartType2Singleton.h"
 // Estado de la aplicación.
 CompilerState state;
 
@@ -52,5 +53,8 @@ const int main(const int argumentCount, const char ** arguments) {
 	freeAll();
 	//liberamos lista CT2
 	freeCT2Data();
+	//liberamos lista CT1
+	freeCT1Mem();
+	
 	return result;
 }

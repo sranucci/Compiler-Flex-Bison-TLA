@@ -38,6 +38,16 @@ static chartType1Singleton * getSingletonCT1Instance(){
 }
 
 
+void freeCT1Mem(){
+    chartType1Singleton * ptr = getSingletonCT1Instance();
+    for ( chartType1Node * current = ptr->first; current != NULL;){
+        chartType1Node * toFree = current;
+        current = current->next;
+        free(toFree);
+    }
+}
+
+
 void setChartType1State(ChartType1State state){
     getSingletonCT1Instance()->state = state;
 }
@@ -45,6 +55,7 @@ void setChartType1State(ChartType1State state){
 ChartType1State getChartType1State(){
     return getSingletonCT1Instance()->state;
 }
+
 
 
 void getDataAsScatter(char * buffer){
@@ -146,6 +157,7 @@ void setSelectedColor(SelectedColor color){
 
 
 void setXAxisName(char * name){
+    printf("%s\n",name);
     strcpy(getSingletonCT1Instance()->xAxisLabel,name);
 }
 
@@ -163,6 +175,19 @@ int getXAxisName(char * buffer){
     return 1;
 }
 
+
+void getXandYAxisData(char * xbuff,char * ybuff ){
+    chartType1Singleton * ptr = getSingletonCT1Instance();
+    int xBytesRead = 0;
+    int yBytesRead = 0;
+
+    for (chartType1Node * current = ptr->first; current != NULL ; current = current->next){
+        xBytesRead += sprintf(xbuff + xBytesRead,"%f,",current->x);
+        yBytesRead += sprintf(ybuff + yBytesRead,"%f,",current->y);
+    }
+    xbuff[xBytesRead - 1] = 0;
+    ybuff[yBytesRead - 1] = 0;
+}
 
 
 int getYAxisName(char * buffer){

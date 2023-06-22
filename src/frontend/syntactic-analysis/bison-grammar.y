@@ -84,7 +84,6 @@
 %type <data> data
 %type <value_list> value_list
 %type <value> value
-%type <y_data> y_data
 %type <add_datas> add_datas
 %type <add_data> add_data
 %type <set_axis> set_axis

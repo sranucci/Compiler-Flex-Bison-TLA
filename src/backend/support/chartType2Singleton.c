@@ -1,6 +1,6 @@
 
 
-#include "calculator.h"
+#include "chartType1Singleton.h"
 #include <stdio.h>
 #include <stdlib.h>
 /*
