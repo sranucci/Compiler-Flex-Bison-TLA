@@ -1,5 +1,6 @@
 #include "../../backend/domain-specific/calculator.h"
 #include "../../backend/support/logger.h"
+#include "../../backend/support/chartType1Singleton.h"
 #include "bison-actions.h"
 #include <stdio.h>
 #include <string.h>
@@ -50,15 +51,39 @@ Program * ProgramGrammarAction(Expression * expression) {
 	* variable es un simple entero, en lugar de un nodo.
 	*/
 	printf("llegamos hasta program\n");
-	for ( AddDatas *currentPtr = expression->chartType->addDatas; currentPtr->addDatasState != NODATA ; currentPtr = currentPtr->addDatas){
-		printf("agregando %s\n",currentPtr->addData->dataName);
-		addToCT2Data(currentPtr->addData->number->value,currentPtr->addData->color->col,currentPtr->addData->dataName);
+	if ( expression->chartType->chartTypeState == TYPE2  ){
+		for ( AddDatas *currentPtr = expression->chartType->addDatas; currentPtr->addDatasState != NODATA ; currentPtr = currentPtr->addDatas){
+			printf("agregando %s\n",currentPtr->addData->dataName);
+			addToCT2Data(currentPtr->addData->number->value,currentPtr->addData->color->col,currentPtr->addData->dataName);
+		}
+
+		state.isChartType1 = false;
+	} else {
+		printf("chartType1\n");
+		Value * xvals = expression->chartType->data->valueList->value;
+		Value * yvals = expression->chartType->yData->valueList->value;
+		while ( yvals->valueState != ONLYVALUE && xvals->valueState != ONLYVALUE){
+			addCoordinate(xvals->userNumber,yvals->userNumber);
+			yvals = yvals->value;
+			xvals = xvals->value;
+		}
+		
+		if ( yvals->valueState != ONLYVALUE || xvals->valueState != ONLYVALUE){
+			//todo setear error
+		} else {
+			addCoordinate(xvals->userNumber,yvals->userNumber);
+			yvals = yvals->value;
+			xvals = xvals->value;
+		}
+		setSelectedColor(expression->chartType->color->col);
+		if ( expression->chartType->setAxis->setAxisState = CONTAINSAXISDATA ){
+			setXAxisName(expression->chartType->setAxis->xaxis);
+			setYAxisName(expression->chartType->setAxis->yaxis);
+		}
+
+		state.isChartType1 = true;
+
 	}
-	printf("el valor del primer nodo data %s\n",expression->chartType->addDatas->addData->dataName);
-	printf("el valor del enum %d\n", expression->chartType->addDatas->addDatasState);
-	printf("el valor del primer nodo data %s\n",expression->chartType->addDatas->addDatas->addData->dataName);
-	printf("el valor del primer nodo data %d\n",expression->chartType->addDatas->addDatas->addDatasState);
-	printCT2List();
 	Program * program = calloc(1,sizeof(Program));
 	program->expression = expression;
 	state.program = program;
@@ -161,6 +186,7 @@ Expression * ExpressionGrammarAction(ChartType *chart){
 	printf("ExpressionGrammarActionFired\n");
 
 	Expression * expr = calloc(1,sizeof(Expression));
+	printf("malloc Success\n");
 	expr->chartType = chart;
 	return expr;
 }
@@ -178,6 +204,95 @@ AddDatas * AddDatasGrammarAction(AddData * data, AddDatas * datas){
 	d->addDatasState = WITHDATA;
 	return d;
 }
+
+
+//nuevas funciones
+
+SetAxis * SetAxisGrammarAction(char * xAxis, char * yAxis){
+	printf("SetAxxisGrammarActionFired\n");
+	SetAxis * axis = calloc(1,sizeof(SetAxis));
+	axis->xaxis = xAxis;
+	axis->yaxis = yAxis;
+	axis->setAxisState = CONTAINSAXISDATA;
+	return axis;
+}
+
+
+SetAxis * SetEmptyAxisGrammarAction(){
+	printf("SetEmptyAxxisGrammarActionFired\n");
+	SetAxis * axis = calloc(1,sizeof(SetAxis));
+	axis->setAxisState = EMPTYAXISSTATE;
+	return axis;
+}
+
+Value * UserValueGrammarAction(double val){
+	printf("SetUserValueGrammarActionFired\n");
+	printf("recieved value %f\n",val);
+	Value * v = calloc(1,sizeof(Value));
+	v->valueState = ONLYVALUE;
+	v->userNumber = val;
+	return v;
+}
+
+Value * UserValueCommaGrammarAction(double val, Value * next){
+	printf("UserValueCommaGrammarActionFired\n");
+	Value * v = calloc(1,sizeof(Value));
+	v->valueState = MOREVALUES;
+	v->userNumber = val;
+	v->value = next;
+	return v;
+}
+
+ValueList *  ValueListGrammarAction(Value * first){
+	printf("ValueListGrammarActionFired\n");
+	ValueList * l = calloc(1,sizeof(ValueList));
+	l->value = first;
+	return l;
+}
+
+Data * DataValueListGrammarAction(ValueList * list){
+	printf("DataGrammarActionFired\n");
+	Data * d = calloc(1,sizeof(Data));
+	d->valueList = list;
+	return d;
+}
+
+
+ChartType1 * ScatterGrammarAction(){
+	printf("ScatterGrammarActionFired\n");
+
+	ChartType1 * c = calloc(1,sizeof(ChartType1));
+	c->chartType1State = SCATTERTYPE;
+
+	return c;
+}
+
+
+ChartType1 * LineGrammarAction(){
+	printf("LineGrammarActionFired\n");
+
+	ChartType1 * c = calloc(1,sizeof(ChartType1));
+	c->chartType1State = LINETYPE;
+	return c;
+}
+
+
+ChartType * ChartType1GrammarAction(ChartType1 * chartType1,char * graphName,Data * xdata,Data * ydata,Color * color, SetAxis * axis ){
+	printf("CT1ActionFired\n");
+	printf("%s\n",graphName);
+	ChartType * c = calloc(1,sizeof(ChartType));
+	c->chartTypeState = TYPE1;
+	c->chartType1 = chartType1;
+	c->data = xdata;
+	c->yData = ydata;
+	c->color =  color;
+	//TODO setear singleton el nombre
+	setCT1Name(graphName);
+	c->setAxis = axis;
+
+	return c;
+}
+
 
 /*
 void freeProgram(Program * program){

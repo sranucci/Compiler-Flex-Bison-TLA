@@ -105,13 +105,13 @@ program: expression	{ $$ = ProgramGrammarAction($1); }
 expression: CREATE CHART chart_type { $$ = ExpressionGrammarAction($3); }
 ;
 
-chart_type: chart_type_1 LABEL WHERE X data AND Y y_data color set_axis { $$ = 0; }
+chart_type: chart_type_1 LABEL WHERE X data AND Y data color set_axis { $$ = ChartType1GrammarAction($1,$2,$5,$8,$9,$10); }
 	| chart_type_2 LABEL add_datas { $$ = ChartType2GrammarAction($1,$2,$3); }
 	;
 
 
-chart_type_1: SCATTER { $$ = 0; }
-	| LINE { $$ = 0; }
+chart_type_1: SCATTER { $$ = ScatterGrammarAction(); }
+	| LINE { $$ = LineGrammarAction(); }
 	;
 
 chart_type_2: BAR { $$ = BarGrammarAction(); }
@@ -122,19 +122,15 @@ chart_type_2: BAR { $$ = BarGrammarAction(); }
 number: USERVALUE { $$ = NumberGrammarAction($1); }
 ;
 
-data: IS value_list { $$ = 0; }
+data: IS value_list { $$ = DataValueListGrammarAction($2); }
 	;
 
-value_list: CURLYOPEN value CURLYCLOSE { $$ = 0; };
+value_list: CURLYOPEN value CURLYCLOSE { $$ = ValueListGrammarAction($2); };
 
 
-value: USERVALUE  { $$ = 0; }
-	| USERVALUE COMMA value { $$ = 0; }
+value: USERVALUE COMMA value { $$ = UserValueCommaGrammarAction($1,$3); }
+	| USERVALUE  { $$ = UserValueGrammarAction($1); }
 	;
-
-y_data: data  { $$ = 0; }
-	;
-
 
 add_data: ADD DATA LABEL VALUE EQUALS number color { $$ = DataGrammarAction($3,$6,$7) ; }
 ;
@@ -144,8 +140,8 @@ add_datas: add_data add_datas{ $$ = AddDatasGrammarAction($1,$2); }
 	;
 
 
-set_axis: SET XAXIS LABEL SET YAXIS LABEL { $$ = 0; }
-	| %empty{ $$ = 0; }
+set_axis: SET XAXIS LABEL SET YAXIS LABEL { $$ = SetAxisGrammarAction($3,$6); }
+	| %empty{ $$ = SetEmptyAxisGrammarAction(); }
 	;
 
 color: WITH COLOR COLOROPTION { $$ = ColorGrammarAction($3); }

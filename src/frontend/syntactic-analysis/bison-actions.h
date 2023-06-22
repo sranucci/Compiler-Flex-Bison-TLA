@@ -30,6 +30,25 @@ AddDatas * EmptyDatasGrammarAction();
 Color * EmptyColorGrammarAction();
 
 
+
+SetAxis * SetAxisGrammarAction(char * xAxis, char * yAxis);
+
+
+SetAxis * SetEmptyAxisGrammarAction();
+
+Value * UserValueGrammarAction(double val);
+Value * UserValueCommaGrammarAction(double val, Value * next);
+ValueList *  ValueListGrammarAction(Value * first);
+
+Data * DataValueListGrammarAction(ValueList * list);
+
+
+ChartType1 * ScatterGrammarAction();
+
+ChartType1 * LineGrammarAction();
+ChartType * ChartType1GrammarAction(ChartType1 * chartType1,char * graphName,Data * xdata,Data * ydata,Color * color, SetAxis * axis );
+
+
 /*
 void freeProgram(Program * program);
 void freeExpressions(Expressions * expressions);

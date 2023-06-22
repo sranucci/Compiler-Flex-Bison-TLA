@@ -18,7 +18,8 @@ const int main(const int argumentCount, const char ** arguments) {
 	// Mostrar parámetros recibidos por consola.
 	for (int i = 0; i < argumentCount; ++i) {
 		LogInfo("Argumento %d: '%s'", i, arguments[i]);
-	}
+	}		//TODO agregar a singleton de CT1
+
 
 	// Compilar el programa de entrada.
 	LogInfo("Compilando...\n");
@@ -30,7 +31,7 @@ const int main(const int argumentCount, const char ** arguments) {
 			// inicial de la gramática satisfactoriamente.
 			if (state.succeed) {
 				LogInfo("La compilacion fue exitosa.");
-				Generator();
+				Generator(state.isChartType1);
 			}
 			else {
 				LogError("Se produjo un error en la aplicacion.");

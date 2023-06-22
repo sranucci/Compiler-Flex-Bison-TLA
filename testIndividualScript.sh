@@ -1,2 +1,2 @@
 
-./script/start.sh ./test/accept/08-pie-chart-floats 
+./script/start.sh ./test/accept/05-scatter-with-axis

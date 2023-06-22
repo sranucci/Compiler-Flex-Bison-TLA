@@ -84,8 +84,9 @@ typedef struct ChartType {
 	//TYPE1
 	ChartType1 * chartType1;
 	Data * data;
-	YData * yData;
+	Data * yData;
 	SetAxis * setAxis;
+	Color * color;
 
 	//TYPE2
 	ChartType2 * chartType2;
@@ -116,16 +117,9 @@ typedef struct Number {
 	double value; //puede ser cualquier numero
 } Number;
 
-typedef enum DataState {
-	INTERVAL,
-	INTERVALWSTEP,
-	VALUELIST,
-} DataState;
+
 
 typedef struct Data {
-	DataState dataState;
-	Interval * interval;
-	IntervalWithStep * intervalWithStep;
 	ValueList * valueList;
 } Data;
 
@@ -174,6 +168,7 @@ typedef struct Value {
 	Value * value;
 
 	//ONLYVALUE
+	double userNumber;
 } Value;
 
 typedef enum YDataState {
@@ -280,6 +275,8 @@ typedef enum SetAxisState {
 
 typedef struct SetAxis {
 	SetAxisState setAxisState;
+	char * yaxis;
+	char * xaxis;
 } SetAxis;
 
 #endif

@@ -4,6 +4,7 @@
 #include "../domain-specific/calculator.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "../support/chartType1Singleton.h"
 
 /**
  * Implementación de "generator.h".
@@ -35,9 +36,47 @@ static void writeChartType2(FILE * file){
 }
 
 
+static void writeChartType1(FILE * file){
+	char graphName[DATASETSIZE];
+	getChartType1GraphName(graphName);
+	if ( getChartType1State() == SCATTERTYPE){
+		char coordinates[DATASETSIZE];
+		char color[DATASETSIZE];
+		getDataAsScatter(coordinates);
+		char * colorOutput;
+		if ( getChartType1Color(color)){
+			colorOutput = color;
+		} else {
+			colorOutput = "blue";
+		}
+		char yAxis[DATASETSIZE];
+		char xAxis[DATASETSIZE];
+		char * outputXaxis;
+		if ( getChartType1XAxisLabel(xAxis)){
+			outputXaxis = xAxis;
+		} else {
+			outputXaxis = "X-Axis";
+		}
+
+		char * outputYaxis;
+		if (getChartType1YAxisLabel(yAxis)){
+			outputYaxis = yAxis;
+		} else {
+			outputYaxis = "Y-Axis";
+		}
+
+		fprintf(file,"new Chart(ctx, { type: 'scatter' ,");
+		fprintf(file," data: { datasets: [{ label: '%s', data: [ %s ], pointBackgroundColor: '%s', pointBorderColor: '%s', pointRadius: 5, pointHoverRadius: 8, }]}",graphName,coordinates, colorOutput,colorOutput);
+		fprintf(file,",options: { title: { display: true, text: '%s' }, scales: { x: { type: 'linear', position: 'bottom', title: { display: true, text: '%s' } },y: { type: 'linear',position: 'left', title: { display: true, text: '%s' } } } }});",graphName,outputXaxis,outputYaxis);
+	} else {
+
+	}
+
+}
 
 
-void Generator() {
+
+void Generator(int isChartType1) {
 	FILE *file;
     char *filename = "index.html";
     
@@ -57,8 +96,11 @@ void Generator() {
 	fprintf(file,"<script>");
 
 	fprintf(file,"var ctx = document.getElementById('myChart').getContext('2d');");
-	writeChartType2(file);
-
+	if (isChartType1){
+		writeChartType1(file);
+	} else {
+		writeChartType2(file);
+	}
 
 
 	//tag script js cierre

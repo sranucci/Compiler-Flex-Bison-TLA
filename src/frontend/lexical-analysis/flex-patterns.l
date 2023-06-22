@@ -65,7 +65,9 @@ whitespace		[ \f\n\r\t\v]
 
 "value"                                     { return ValuePatternAction(yytext); }
 
-									
+
+
+"="                                         { return EqualsPatternAction(yytext); }
 
 
                                     

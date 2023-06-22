@@ -32,7 +32,6 @@ extern int yyparse(void);
 
 // Emular tipo "boolean".
 typedef enum {
-
 	false = 0,
 	true = 1
 } boolean;
@@ -54,6 +53,9 @@ typedef struct {
 	// Agregar una pila para manipular scopes.
 	// Agregar una tabla de símbolos.
 	// ...
+
+	boolean isChartType1;//para saber que tipo de chart tenemos
+
 
 } CompilerState;
 
