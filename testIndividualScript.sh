@@ -1,2 +1,2 @@
-
-./script/start.sh ./test/accept/09-scatter-no-color
+rm index.html
+./script/start.sh ./test/accept/10-bar-some-color
