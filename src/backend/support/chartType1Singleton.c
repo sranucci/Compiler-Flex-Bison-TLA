@@ -5,12 +5,15 @@
 
 #define SIZE 512
 
+//nodos de la lista
 typedef struct chartType1Node {
     double x;
     double y;
     struct chartType1Node * next;
 } chartType1Node;
 
+
+//nodo maestro, 
 typedef struct chartType1Singleton {
     char graphName[SIZE];
     char xAxisLabel[SIZE];
@@ -21,6 +24,7 @@ typedef struct chartType1Singleton {
 } chartType1Singleton;
 
 
+//patron singleton
 static chartType1Singleton * createSingletonCT1Instance(){
     static chartType1Singleton singleton;
     memset(&singleton,0,sizeof(chartType1Singleton));
@@ -38,6 +42,7 @@ static chartType1Singleton * getSingletonCT1Instance(){
 }
 
 
+//libera recursos alocados
 void freeCT1Mem(){
     chartType1Singleton * ptr = getSingletonCT1Instance();
     for ( chartType1Node * current = ptr->first; current != NULL;){
@@ -46,7 +51,6 @@ void freeCT1Mem(){
         free(toFree);
     }
 }
-
 
 void setChartType1State(ChartType1State state){
     getSingletonCT1Instance()->state = state;
@@ -58,6 +62,7 @@ ChartType1State getChartType1State(){
 
 
 
+//devuelve los datos en buffer en formato necesario para grafico SCATTER
 void getDataAsScatter(char * buffer){
     chartType1Singleton * master = getSingletonCT1Instance();
     int bytesCopied = 0;
@@ -67,12 +72,12 @@ void getDataAsScatter(char * buffer){
     buffer[bytesCopied - 1] = 0;//sacamos la ,
 }
 
-
+// devuelve nombre del grafico
 void getChartType1GraphName(char * buffer){
     strcpy(buffer,getSingletonCT1Instance()->graphName);
 }
 
-
+//devuelve nombre del eje x si lo hubiese
 int getChartType1XAxisLabel(char * label){
     if ( strlen(getSingletonCT1Instance()->xAxisLabel) > 0 ){
         strcpy(label,getSingletonCT1Instance()->xAxisLabel);
@@ -81,7 +86,7 @@ int getChartType1XAxisLabel(char * label){
     return 0;
 }
 
-
+//devuelve nombre del eje y si lo hubiese
 int getChartType1YAxisLabel(char * label){
     if ( strlen(getSingletonCT1Instance()->yAxisLabel) > 0 ){
         strcpy(label,getSingletonCT1Instance()->yAxisLabel);
@@ -91,7 +96,7 @@ int getChartType1YAxisLabel(char * label){
 }
 
 
-
+//devuelve el color del grafico
 int getChartType1Color(char * color){
     if ( strlen(getSingletonCT1Instance()->color) > 0 ){
         strcpy(color,getSingletonCT1Instance()->color);
@@ -103,7 +108,7 @@ int getChartType1Color(char * color){
 
 
 
-
+//agrega un par de coordenada a la lista
 void addCoordinate(double x, double y) {
     chartType1Singleton *singleton = getSingletonCT1Instance();
 
@@ -124,12 +129,13 @@ void addCoordinate(double x, double y) {
 
 }
 
+//setea el nombre del grafico
 void setCT1Name(char * buff){
     strcpy(getSingletonCT1Instance()->graphName,buff);
 }
 
 
-
+//setea el color del grafico, en el formato necesario para chart js
 void setSelectedColor(SelectedColor color){
     char *chosenColor;
     switch (color) {
@@ -166,16 +172,8 @@ void setYAxisName(char * name){
     strcpy(getSingletonCT1Instance()->yAxisLabel,name);
 }
 
-int getXAxisName(char * buffer){
-    chartType1Singleton * ptr = getSingletonCT1Instance();
-    if ( ptr->xAxisLabel == NULL){
-        return 0;
-    }
-    strcpy(buffer,ptr->xAxisLabel);
-    return 1;
-}
 
-
+//recupera los datos para el eje x e y
 void getXandYAxisData(char * xbuff,char * ybuff ){
     chartType1Singleton * ptr = getSingletonCT1Instance();
     int xBytesRead = 0;
@@ -189,12 +187,3 @@ void getXandYAxisData(char * xbuff,char * ybuff ){
     ybuff[yBytesRead - 1] = 0;
 }
 
-
-int getYAxisName(char * buffer){
-    chartType1Singleton * ptr = getSingletonCT1Instance();
-    if ( ptr->yAxisLabel == NULL){
-        return 0;
-    }
-    strcpy(buffer,ptr->yAxisLabel);
-    return 1;
-}

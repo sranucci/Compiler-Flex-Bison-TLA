@@ -19,11 +19,9 @@ void getXandYAxisData(char * xbuff,char * ybuff );
 void setXAxisName(char * name);
 void setYAxisName(char * name);
 
-int getXAxisName(char * buffer);
 
 ChartType1State getChartType1State();
 void setChartType1State(ChartType1State state);
-int getYAxisName(char * buffer);
 
 void getDataAsScatter(char * buffer);
 
