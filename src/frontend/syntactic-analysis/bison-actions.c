@@ -51,6 +51,10 @@ Program * ProgramGrammarAction(Expression * expression) {
 	* la expresión se computa on-the-fly, y es la razón por la cual esta
 	* variable es un simple entero, en lugar de un nodo.
 	*/
+
+
+
+	//simplemente chequeamos el tipo de chart que llego, y agregamos los datos al singleton correspondiente
 	printf("llegamos hasta program\n");
 	if ( expression->chartType->chartTypeState == TYPE2  ){
 		for ( AddDatas *currentPtr = expression->chartType->addDatas; currentPtr->addDatasState != NODATA ; currentPtr = currentPtr->addDatas){

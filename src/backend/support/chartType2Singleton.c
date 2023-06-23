@@ -72,7 +72,7 @@ void getGraphName(char * graphName){
     strcpy(graphName,getSingletonInstance()->graphName);
 }
 
-//"red"|"blue"|"orange"|"yellow"|"black"|"green"      
+//guardamos datos en formato listo para chart js    
 void addToCT2Data(double number, SelectedColor color, const char* name) {
     ChartType2Node* newNode = (ChartType2Node*)malloc(sizeof(ChartType2Node));
     if (newNode == NULL) {
